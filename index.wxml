@@ -1,0 +1,53 @@
+<view class="container">
+  <!-- 顶部标题栏 -->
+  <view class="header">
+    松江民国实景互动叙事
+  </view>
+
+  <!-- 聊天气泡列表 -->
+  <scroll-view class="chat-list" scroll-y="true">
+    <block wx:for="{{messages}}" wx:key="index">
+      <view class="message-item {{item.role === 'user' ? 'from-user' : 'from-ai'}}">
+        <view class="bubble">
+          {{item.text}}
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 来自 Coze 的当前可选行动 -->
+  <view class="choices" wx:if="{{currentChoices.length}}">
+    <block wx:for="{{currentChoices}}" wx:key="id">
+      <button
+        class="choice-btn"
+        size="mini"
+        data-id="{{item.id}}"
+        data-label="{{item.label}}"
+        bindtap="onChoiceTap"
+      >
+        {{item.label}}
+      </button>
+    </block>
+  </view>
+
+  <!-- 功能按钮区域：预留 NFC 和拍照 -->
+  <view class="toolbar">
+    <button class="tool-btn" size="mini" bindtap="onTapNFC">贴一下线索卡（NFC）</button>
+    <button class="tool-btn" size="mini" bindtap="onTapPhoto">拍照提交线索</button>
+  </view>
+
+  <!-- 底部输入栏 -->
+  <view class="input-bar">
+    <input
+      class="input"
+      placeholder="在这里输入你想对TA说的话..."
+      placeholder-class="input-placeholder"
+      value="{{inputValue}}"
+      bindinput="onInputChange"
+      confirm-type="send"
+      bindconfirm="onSend"
+    />
+    <button class="send-btn" type="primary" bindtap="onSend">发送</button>
+  </view>
+</view>
+
